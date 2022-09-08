@@ -1,9 +1,7 @@
 from selenium import webdriver
 import selenium.webdriver.support.ui as ui
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import selenium.common.exceptions as selenium_exceptions
 import yaml
 
 with open('.\\config.yaml', 'r') as f:
