@@ -143,3 +143,6 @@ pw.txt
 config.json
 config.yaml
 
+# Not needed
+.idea
+
