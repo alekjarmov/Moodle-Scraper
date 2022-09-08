@@ -6,8 +6,8 @@ import yaml
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 
-with open('.\\config.yaml', 'r') as f:
-    config = yaml.safe_load(f)
+with open('.\\config.yaml', 'r') as stream:
+    config = yaml.safe_load(stream)
 
 CHROMEDRIVER_PATH = config['chromedriver']
 
@@ -73,13 +73,15 @@ def main():
                 link_url = link.get_attribute('data-href')
                 name = cells[1].text
                 date = cells[5].text
-                # get the querystring rid from the link
+                # get the querystring rid of the link
                 parsed_url = urlparse(link_url)
                 rid = parse_qs(parsed_url.query)['rid'][0]
                 link_url = base_recording_url + rid
                 print(f'{name} {date} {link_url}')
                 f.write(f'{name} {date} {link_url}\n\n')
             driver.back()
+
+    driver.quit()
 
 
 if __name__ == '__main__':
