@@ -1,10 +1,14 @@
+import builtins
+
 from selenium import webdriver
 import selenium.webdriver.support.ui as ui
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import yaml
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
+import os
 
 with open('.\\config.yaml', 'r') as stream:
     config = yaml.safe_load(stream)
@@ -54,7 +58,10 @@ def main():
     num_images = len(images)
     # create a file with the links to the BBB sessions
     base_recording_url = 'https://bbb-lb.finki.ukim.mk/playback/presentation/2.3/'
-    with open(file_to_save, 'w', encoding='utf-8') as f:
+    folder_name = 'recording_links'
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+    with open(os.path.join(folder_name, file_to_save), 'w', encoding='utf-8') as f:
         for i in range(num_images):
             image = driver.find_elements(By.CSS_SELECTOR, f'img[src="{bbb_img_url}"]')[i]
             link = image.find_element(By.XPATH, '..')
@@ -68,17 +75,21 @@ def main():
 
             rows = table.find_elements(By.TAG_NAME, 'tr')
             for row in rows[1:]:
-                cells = row.find_elements(By.TAG_NAME, 'td')
-                link = cells[0].find_element(By.TAG_NAME, 'a')
-                link_url = link.get_attribute('data-href')
-                name = cells[1].text
-                date = cells[5].text
-                # get the querystring rid of the link
-                parsed_url = urlparse(link_url)
-                rid = parse_qs(parsed_url.query)['rid'][0]
-                link_url = base_recording_url + rid
-                print(f'{name} {date} {link_url}')
-                f.write(f'{name} {date} {link_url}\n\n')
+                try:
+                    cells = row.find_elements(By.TAG_NAME, 'td')
+                    link = cells[0].find_element(By.TAG_NAME, 'a')
+                    link_url = link.get_attribute('data-href')
+                    name = cells[1].text
+                    date = cells[5].text
+                    # get the querystring rid of the link
+                    parsed_url = urlparse(link_url)
+                    rid = parse_qs(parsed_url.query)['rid'][0]
+                    link_url = base_recording_url + rid
+                    print(f'{name} {date} {link_url}')
+                    f.write(f'{name} {date} {link_url}\n\n')
+                except Exception as e:
+                    print(e)
+                    continue
             driver.back()
 
     driver.quit()
