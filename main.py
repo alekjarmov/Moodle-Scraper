@@ -1,8 +1,5 @@
-import builtins
-
 from selenium import webdriver
 import selenium.webdriver.support.ui as ui
-from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import yaml
@@ -25,6 +22,7 @@ file_to_save = file_to_save.split('.')[0] + '.txt'
 
 
 def login(driver: webdriver.Chrome):
+    
     driver.get(url)
     my_login = config['Login']
     driver.find_element(By.ID, 'username').send_keys(my_login['username'])
@@ -48,7 +46,7 @@ def cookie_login(driver: webdriver.Chrome):
 login_type = {'auto': login, 'manual': manual_login, 'cookie': cookie_login}
 
 
-def main():
+def main() -> None:
     driver = webdriver.Chrome(CHROMEDRIVER_PATH)
     login_type[config['login_method']](driver)
     print('Logged in')
@@ -87,8 +85,8 @@ def main():
                     link_url = base_recording_url + rid
                     print(f'{name} {date} {link_url}')
                     f.write(f'{name} {date} {link_url}\n\n')
-                except Exception as e:
-                    print(e)
+                except Exception as ex:
+                    print(ex)
                     continue
             driver.back()
 
@@ -97,4 +95,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
