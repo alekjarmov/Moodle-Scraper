@@ -17,7 +17,7 @@ os_url = 'https://courses.finki.ukim.mk/course/view.php?id=1987'
 courses_url = 'https://courses.finki.ukim.mk'
 dna_url = 'https://courses.finki.ukim.mk/course/view.php?id=2051'
 url = input('Enter the URL of the course: ')
-file_to_save = input('Enter the file name where the recordings are saved: ')
+file_to_save = input('Enter the file name(the file will be a txt) where the recording links are saved: ')
 file_to_save = file_to_save.split('.')[0] + '.txt'
 
 
