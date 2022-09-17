@@ -34,7 +34,7 @@ def login(driver: webdriver.Chrome):
 def manual_login(driver: webdriver.Chrome):
     driver.get(url)
     wait = ui.WebDriverWait(driver, 60)
-    element = wait.until(EC.presence_of_element_located((By.ID, "page-course-view-topics")))
+    element = wait.until(EC.presence_of_element_located((By.ID, "page-course-view-weeks")))
 
 
 def cookie_login(driver: webdriver.Chrome):
