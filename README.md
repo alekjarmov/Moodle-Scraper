@@ -4,7 +4,7 @@
 
     pip install -r requirements.txt
 
-The newest version of chrome and chromedriver is required. You can download the latest version of chrome driver from [here](https://chromedriver.chromium.org/downloads).
+The newest version of chrome and chromedriver is required. You can download the latest stable version of chrome driver from [here](https://chromedriver.chromium.org/home).
 #### Create a config.yaml file in the root directory with the following content:
 ```yaml
 MoodleCookie:
