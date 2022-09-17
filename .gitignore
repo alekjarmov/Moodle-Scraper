@@ -145,4 +145,7 @@ config.yaml
 
 # Not needed
 .idea/
+.vscode/
+recording_links/
+sandbox/
 
