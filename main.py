@@ -2,6 +2,7 @@ from selenium import webdriver
 import selenium.webdriver.support.ui as ui
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 import yaml
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
@@ -17,7 +18,7 @@ os_url = 'https://courses.finki.ukim.mk/course/view.php?id=1987'
 courses_url = 'https://courses.finki.ukim.mk'
 dna_url = 'https://courses.finki.ukim.mk/course/view.php?id=2051'
 url = input('Enter the URL of the course: ')
-file_to_save = input('Enter the file name(the file will be a txt) where the recording links are saved: ')
+file_to_save = input('Enter the file name where you want the recording links to be saved: ')
 file_to_save = file_to_save.split('.')[0] + '.txt'
 
 
@@ -47,7 +48,8 @@ login_type = {'auto': login, 'manual': manual_login, 'cookie': cookie_login}
 
 
 def main() -> None:
-    driver = webdriver.Chrome(CHROMEDRIVER_PATH)
+    s = Service(CHROMEDRIVER_PATH)
+    driver = webdriver.Chrome(service=s)
     login_type[config['login_method']](driver)
     print('Logged in')
     bbb_img_url = 'https://courses.finki.ukim.mk/theme/image.php/classic/bigbluebuttonbn/1637059223/icon'
